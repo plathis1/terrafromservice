@@ -23,7 +23,7 @@ stages:
     steps:
     - task: Docker@2
       inputs:
-        containerRegistry: 'lathish Docker hub'
+        containerRegistry: 'lathish97 docker hub'
         repository: 'lathish97/my-dotnet-app'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
