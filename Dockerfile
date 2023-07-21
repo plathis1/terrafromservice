@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 
 # Copy the .csproj file to restore dependencies
-COPY MyDotNetApp.csproj ./
+COPY deployWebAPI.csproj ./
 
 # Restore the dependencies
 RUN dotnet restore
@@ -26,4 +26,4 @@ COPY --from=build /app .
 EXPOSE 80
 
 # Set the entry point for your Web API
-ENTRYPOINT ["dotnet", "MyDotNetApp.dll"]
+ENTRYPOINT ["dotnet", "deployWebAPI.dll"]
