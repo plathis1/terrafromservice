@@ -26,4 +26,4 @@ COPY --from=build /app .
 EXPOSE 80
 
 # Set the entry point for your Web API
-ENTRYPOINT ["dotnet", "MyDotNetApp.dll"]
+ENTRYPOINT ["dotnet", "deployWebAPI.dll"]
