@@ -24,7 +24,7 @@ stages:
     - task: Docker@2
       inputs:
         containerRegistry: 'lathish97 docker hub'
-        repository: 'lathish97/my-dotnet-app'
+        repository: 'lathish97/terraform-cicd-webapi'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         tags: |

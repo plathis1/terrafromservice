@@ -31,17 +31,17 @@ resource "azurerm_resource_group" "tf_test" {
 }
 
 resource "azurerm_container_group" "tfcg_test" {
-  name                      = "weatherapi"
+  name                      = "terraform-cicd-webapi"
   location                  = azurerm_resource_group.tf_test.location
   resource_group_name       = azurerm_resource_group.tf_test.name
 
   ip_address_type     = "Public"
-  dns_name_label      = "my-dotnet"
+  dns_name_label      = "terraform-cicd-webapi"
   os_type             = "Linux"
 
   container {
       name            = "weatherapi"
-      image           = "lathish97/my-dotnet-app:${var.imagebuild}"
+      image           = "lathish97/terraform-cicd-webapi:${var.imagebuild}"
         cpu             = "1"
         memory          = "1"
 
