@@ -26,7 +26,7 @@ variable "imagebuild" {
 }
 
 resource "azurerm_resource_group" "tf_test" {
-  name = "tfmainrg"
+  name = "terraform-cicd-webapi"
   location = "East US"
 }
 
