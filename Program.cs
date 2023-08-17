@@ -13,19 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IWeatherRepo , WeatherRepo>();
-var connection = String.Empty;
-if (builder.Environment.IsDevelopment())
-{
-    builder.Configuration.AddEnvironmentVariables().AddJsonFile("appsettings.Development.json");
-    connection = builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING");
-}
-else
-{
-    connection = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTIONSTRING");
-}
-
-
-builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(connection));
+builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(configurationManager.GetConnectionString("AZURE_SQL_CONNECTIONSTRING")));
 
 var app = builder.Build();
 
