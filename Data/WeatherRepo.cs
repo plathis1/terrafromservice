@@ -9,10 +9,10 @@ namespace deployWebAPI.Data
 {
     public class WeatherRepo : IWeatherRepo
     {
-        private readonly AppDbContext context;
+        private readonly AppDbContext dbContext;
         public WeatherRepo(AppDbContext context)
         {
-            this.context = context;
+            this.dbContext = context;
         }
         public void CreateWeatherDetails(Weather weather)
         {
@@ -21,22 +21,22 @@ namespace deployWebAPI.Data
                 throw new ArgumentNullException(nameof(weather));
             }
 
-            this.context.WeatherData.Add(weather);
+            this.dbContext.WeatherData.Add(weather);
         }
 
         public IEnumerable<Weather> GetAllWeatherDetails()
         {
-            return this.context.WeatherData.ToList();
+            return this.dbContext.WeatherData.ToList();
         }
 
         public Weather GetWeatherDetailsById(int id)
         {
-            return this.context.WeatherData.FirstOrDefault(p => p.Id == id);
+            return this.dbContext.WeatherData.FirstOrDefault(p => p.Id == id);
         }
 
         public void UpdateWeatherDetails(WeatherCreateDto weatherParam, int id)
         {
-            Weather weather = this.context.WeatherData.FirstOrDefault(p => p.Id == id);
+            Weather weather = this.dbContext.WeatherData.FirstOrDefault(p => p.Id == id);
             if(weather != null)
             {
                 weather.City = weatherParam.City;
@@ -48,16 +48,16 @@ namespace deployWebAPI.Data
 
         public void DeleteWeatherDetails(int id)
         {
-            Weather weather = this.context.WeatherData.FirstOrDefault(p => p.Id == id);
+            Weather weather = this.dbContext.WeatherData.FirstOrDefault(p => p.Id == id);
             if(weather != null)
             {
-                this.context.WeatherData.Remove(weather);
+                this.dbContext.WeatherData.Remove(weather);
             }
         }
 
         public bool SaveChanges()
         {
-            return (this.context.SaveChanges() >= 0);
+            return (this.dbContext.SaveChanges() >= 0);
         }
     }
 }
