@@ -23,7 +23,7 @@ namespace deployWebAPI.Controllers
             this.mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet(Name = "GetAllWeatherDetails")]
         public ActionResult<IEnumerable<WeatherReadDto>> GetAllWeatherDetails()
         {
             Console.WriteLine("--> Getting Weather Details....");
@@ -36,7 +36,7 @@ namespace deployWebAPI.Controllers
         [HttpGet("{id}", Name = "GetWeatherDetailsById")]
         public ActionResult<WeatherReadDto> GetWeatherDetailsById(int id)
         {
-
+            Console.WriteLine("--> getting Weather Details based on id....");
             Weather weatherItem = this.repository.GetWeatherDetailsById(id);
 
             if(weatherItem != null)
@@ -61,5 +61,30 @@ namespace deployWebAPI.Controllers
             return CreatedAtRoute(nameof(GetWeatherDetailsById), new { id = weatherReadDto.Id }, weatherReadDto);
             
         }
+
+        [HttpPatch("{id}")]
+        public ActionResult<WeatherReadDto> UpdateWeatherDetails(WeatherCreateDto weatherCreateDto, int id)
+        {
+            Console.WriteLine("--> Updating Weather Details based on id....");
+
+            this.repository.UpdateWeatherDetails(weatherCreateDto,id);
+
+            this.repository.SaveChanges();
+
+            return CreatedAtRoute(nameof(GetWeatherDetailsById), new { id = id }, weatherCreateDto);
+        }
+
+        /*[HttpDelete("{id}")]
+        public ActionResult<IEnumerable<WeatherReadDto>> DeleteWeatherDetails(int id)
+        {
+            Console.WriteLine("--> Deleting Weather Details based on id....");
+
+            this.repository.DeleteWeatherDetails(id);
+            this.repository.SaveChanges();
+
+            IEnumerable<Weather> weatherItems = this.repository.GetAllWeatherDetails();
+
+            return Ok(this.mapper.Map<IEnumerable<WeatherReadDto>>(weatherItems));
+        }*/
     }
 }

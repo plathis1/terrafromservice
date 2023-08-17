@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using deployWebAPI.Dtos;
 using deployWebAPI.Models;
 
 namespace deployWebAPI.Data
@@ -12,6 +13,10 @@ namespace deployWebAPI.Data
 
         IEnumerable<Weather> GetAllWeatherDetails();
         Weather GetWeatherDetailsById(int id);
-        void CreateWeatherDetails(Weather plat);
+        void CreateWeatherDetails(Weather weather);
+
+        void UpdateWeatherDetails(WeatherCreateDto weatherParam, int id);
+
+        void DeleteWeatherDetails(int id);
     }
 }

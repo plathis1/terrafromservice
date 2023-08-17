@@ -2,40 +2,62 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using deployWebAPI.Dtos;
 using deployWebAPI.Models;
 
 namespace deployWebAPI.Data
 {
     public class WeatherRepo : IWeatherRepo
     {
-        private readonly AppDbContext _context;
+        private readonly AppDbContext context;
         public WeatherRepo(AppDbContext context)
         {
-            _context = context;
+            this.context = context;
         }
-        public void CreateWeatherDetails(Weather plat)
+        public void CreateWeatherDetails(Weather weather)
         {
-            if(plat == null)
+            if(weather == null)
             {
-                throw new ArgumentNullException(nameof(plat));
+                throw new ArgumentNullException(nameof(weather));
             }
 
-            _context.WeatherData.Add(plat);
+            this.context.WeatherData.Add(weather);
         }
 
         public IEnumerable<Weather> GetAllWeatherDetails()
         {
-            return _context.WeatherData.ToList();
+            return this.context.WeatherData.ToList();
         }
 
         public Weather GetWeatherDetailsById(int id)
         {
-            return _context.WeatherData.FirstOrDefault(p => p.Id == id);
+            return this.context.WeatherData.FirstOrDefault(p => p.Id == id);
+        }
+
+        public void UpdateWeatherDetails(WeatherCreateDto weatherParam, int id)
+        {
+            Weather weather = this.context.WeatherData.FirstOrDefault(p => p.Id == id);
+            if(weather != null)
+            {
+                weather.City = weatherParam.City;
+                weather.Temperature = weatherParam.Temperature;
+                weather.Humidity = weatherParam.Humidity;
+                weather.DateTime = weatherParam.DateTime;
+            }
+        }
+
+        public void DeleteWeatherDetails(int id)
+        {
+            Weather weather = this.context.WeatherData.FirstOrDefault(p => p.Id == id);
+            if(weather != null)
+            {
+                this.context.WeatherData.Remove(weather);
+            }
         }
 
         public bool SaveChanges()
         {
-            return (_context.SaveChanges() >= 0);
+            return (this.context.SaveChanges() >= 0);
         }
     }
 }
